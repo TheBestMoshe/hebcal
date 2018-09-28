@@ -47,7 +47,6 @@ class TimeInfo:
 
         self.date_time = proccess_datetime(date_time, timezone=self.timezone)
 
-        self._build_sun()
         self._sun_calculations()
 
         # This is used to check for halachic nightfall. The default is at
@@ -145,33 +144,30 @@ class TimeInfo:
         
         return alternate_hebrew_date
 
-    def _build_sun(self):
-        self.observer = ephem.Observer()
-        self.observer.lat = str(self.latitude)
-        self.observer.lon = str(self.longitude)
-        self.observer.date = convert_datetime_to_utc(self.date_time)
-
-        self.sun = ephem.Sun()
-    
     def _sun_calculations(self):
-        self.observer.horizon = '0'
+        observer = ephem.Observer()
+        observer.lat = str(self.latitude)
+        observer.lon = str(self.longitude)
+        observer.date = convert_datetime_to_utc(self.date_time)
+
+        sun = ephem.Sun()
+    
+        observer.horizon = '0'
         # Get times from ephem
-        next_sunrise = self.observer.next_rising(self.sun).datetime()
-        previous_sunrise = self.observer.previous_rising(self.sun).datetime()
+        next_sunrise = observer.next_rising(sun).datetime()
+        previous_sunrise = observer.previous_rising(sun).datetime()
 
-        next_sunset = self.observer.next_setting(self.sun).datetime()
-        previous_sunset = self.observer.previous_setting(self.sun).datetime()
+        next_sunset = observer.next_setting(sun).datetime()
+        previous_sunset = observer.previous_setting(sun).datetime()
 
-        self.observer.horizon = '-16.1'
-        next_dawn = self.observer.next_rising(self.sun,
-                                              use_center=True).datetime()
-        previous_dawn = self.observer.previous_rising(self.sun,
+        observer.horizon = '-16.1'
+        next_dawn = observer.next_rising(sun, use_center=True).datetime()
+        previous_dawn = observer.previous_rising(sun,
                                                       use_center=True).datetime()
         
-        self.observer.horizon = '16.1'
-        next_dusk = self.observer.next_setting(self.sun,
-                                               use_center=True).datetime()
-        previous_dusk = self.observer.previous_setting(self.sun,
+        observer.horizon = '16.1'
+        next_dusk = observer.next_setting(sun, use_center=True).datetime()
+        previous_dusk = observer.previous_setting(sun,
                                                        use_center=True).datetime()
 
         # Since the ephem times are in UTC time, convert to local time
