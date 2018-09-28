@@ -12,8 +12,8 @@ def test_today_sunrise():
     assert str(ti.today_sunrise()) == '2018-09-19 06:41:18.851418-04:00'
 
 
-def test_is_yom():
-    assert ti.is_yom() is False
+def test_is_day():
+    assert ti.is_day() is False
 
 
 def test_is_night():
@@ -30,6 +30,7 @@ def test_alternate_hebrew_date():
     zmanim = zmanim.Zmanim(ti)
     ti.alternate_nighttime = zmanim.night_72
     assert str(ti.alternate_hebrew_date) == '(5779, 7, 10)'
+    assert ti.hebrew_day == 11
 
 
 def test_is_next_hebrew_day():
