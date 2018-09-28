@@ -122,7 +122,7 @@ class TimeInfo:
             int -- The Hebrew day
         """
 
-        return self.heb_date[2]
+        return self.hebrew_date[2]
 
     @property
     def alternate_hebrew_date(self):
