@@ -1,7 +1,8 @@
 # Hebcal
 ### A python package for working with Hebrew dates, times, and holidays
 
-I've found several python packages that deal with Hebrew dates, Z'manim and Jewish holidays. However, since the Hebrew calendar considers nightfall the beginning of the new day, I've found it very inconvenient to work with other packages. Just converting a Gregorian date to a Hebrew date doesn't give you the proper conversion, as it could be past nightfall, which needs to manually accommodated.
+#### Note: This is still in development and not ready for production. There will still be lots of breaking changes.
+There are several python packages that deal with Hebrew dates, Z'manim and Jewish holidays. However, since the Hebrew calendar considers nightfall the beginning of the new day, I've found it very inconvenient to work with other packages. Just converting a Gregorian date to a Hebrew date doesn't give you the proper conversion, as it could be past nightfall, which needs to manually accommodated.
 
 The same goes for any Jewish holiday package. You first need to figure out what the real Hebrew date is before you can determine if it's currently a holiday.
 
