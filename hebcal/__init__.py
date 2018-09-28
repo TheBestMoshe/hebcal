@@ -86,6 +86,7 @@ class TimeInfo:
         self.hebrew_month = self.hebrew_date[1]
         self.hebrew_day = self.hebrew_date[2]
 
+    @property
     def alternate_hebrew_date(self):
         # If time is after sunset but before alternate_nighttime use this days
         #   hebrew date instead of changing to tomorow's

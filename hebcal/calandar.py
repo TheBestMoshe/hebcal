@@ -90,9 +90,9 @@ class Holidays:
             return True
 
         else:
-            if info.alternate_hebrew_date() != info.hebrew_date:
-                holiday.hebrew_month = str(info.alternate_hebrew_date()[1])
-                holiday.hebrew_day = str(info.alternate_hebrew_date()[2])
+            if info.alternate_hebrew_date != info.hebrew_date:
+                holiday.hebrew_month = str(info.alternate_hebrew_date[1])
+                holiday.hebrew_day = str(info.alternate_hebrew_date[2])
 
                 if holiday.get_rest_holiday() is not None:
                     return True
