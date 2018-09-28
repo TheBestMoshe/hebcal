@@ -8,12 +8,22 @@ from datetime import timedelta
 
 
 class TimeInfo:
+    """Container for time, date, and sun information
+        
+    This class is used to contain the basic information. It includes:
+            - date
+            - time
+            - Hebrew date
+            - latitude/longitude
+            - timezone
+            - sun times (sunrise, sunset, dawn, dusk)
+        
+    """
+
     def __init__(self, date_time, **kwargs):
-        """Set with date_time and location info
+        """Setup the __init__
         
-        [description]
-        
-        Arguments:
+        Args:
             date_time {str} -- Valid datetime string
 
             accepted kwargs:
@@ -21,6 +31,14 @@ class TimeInfo:
                 longitude {int} -- in degrees
                 lat_lon {tuple} -- Latitude and longitude in degrees
                 timezone {str} -- A valid timezone
+        
+        Attributes:
+            latitude (float): The latitude
+            longitude (float): The longitude
+            timezone (str): The timezone
+            datetime (:obj:): The datetime
+            alternate_nighttime (:obj:): An alternate nighttime to use for
+                some calculations
         
         Raises:
             Exception -- If no location info is given
@@ -154,6 +172,21 @@ class TimeInfo:
         return alternate_hebrew_date
 
     def _sun_calculations(self):
+        """Calculate the sun times
+
+        Creates class attributes for based on the sun
+        
+        Attributes:
+            next_sunrise (:obj:): Datetime for  next sunrise
+            previous_sunrise (:obj:): Datetime for  previous sunset
+            next_sunset (:obj:): Datetime for  next sunset
+            previous_sunset (:obj:): Datetime for previous sunset
+            next_dawn (:obj:): Datetime for next dawn
+            previous_dawn (:obj:): Datetime for previous dawn
+            next_dusk (:obj:): Datetime for next dusk
+            previous_dusk (:obj:): Datetime for previous dusk
+        """
+
         observer = ephem.Observer()
         observer.lat = str(self.latitude)
         observer.lon = str(self.longitude)
@@ -174,6 +207,7 @@ class TimeInfo:
         previous_dawn = observer.previous_rising(sun,
                                                       use_center=True).datetime()
         
+        # NOTE: I don't think this is the proper dusk calculation
         observer.horizon = '16.1'
         next_dusk = observer.next_setting(sun, use_center=True).datetime()
         previous_dusk = observer.previous_setting(sun,
@@ -199,16 +233,38 @@ class TimeInfo:
         self.previous_dusk = convert_datetime_to_local(previous_dusk, 
                                                        timezone=self.timezone)
 
-    def is_yom(self):
+    def is_day(self):
+        """Check if its currently day
+        
+        Returns:
+            True if its day. False it its night
+        """
+
         if self.next_sunrise > self.next_sunset:
             return True
         else:
             return False
     
     def is_night(self):
-        return not self.is_yom()
+        """Check if its currently night
+    
+        Returns:
+            True if its day. False if its night
+        """
+
+        return not self.is_day()
     
     def is_next_hebrew_day(self):
+        """Check if it's already the next Hebrew day
+        
+        The hebrew day begins at sunset. Therefore, if it's after sunset, the
+        the next Hebrew day has begun. This will return True if the next Hebrew
+        day has begun.
+        
+        Returns:
+            True if the next hebrew day has begun. False otherwise
+        """
+
         if self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
             return False
         else:
@@ -216,6 +272,12 @@ class TimeInfo:
 
     @property
     def today_sunrise(self):
+        """Get the sunrise of the current day
+        
+        Returns:
+            object: datetime.datetime object of the sunrise time
+        """
+
         if self.date_time.strftime('%d') == self.previous_sunrise.strftime('%d'):
             return self.previous_sunrise
         elif self.date_time.strftime('%d') == self.next_sunrise.strftime('%d'):
@@ -223,6 +285,12 @@ class TimeInfo:
 
     @property
     def today_sunset(self):
+        """Get the sunset of the current day
+        
+        Returns:
+            object: datetime.datetime object of the sunset time
+        """
+
         if self.date_time.strftime('%d') == self.previous_sunset.strftime('%d'):
             return self.previous_sunset
         elif self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
@@ -230,6 +298,14 @@ class TimeInfo:
     
     @property
     def today_dawn(self):
+        """Get the dawn of the current day
+        
+        This is the Alot Hashsachar calculated with -16.1 degrees
+        
+        Returns:
+            object: datetime.datetime object of the time of dawn
+        """
+
         if self.date_time.strftime('%d') == self.previous_dawn.strftime('%d'):
             return self.previous_dawn
         elif self.date_time.strftime('%d') == self.next_dawn.strftime('%d'):
@@ -237,6 +313,15 @@ class TimeInfo:
 
     @property
     def today_dusk(self):
+        """Get the dusk of the current day
+        
+        Note:
+            The entire dusk calculation is not acurate. It needs to be redone
+        
+        Returns:
+            object: datetime.datetime object of the time of dusk
+        """
+
         if self.date_time.strftime('%d') == self.previous_dusk.strftime('%d'):
             return self.previous_dusk
         else:
