@@ -59,12 +59,26 @@ class Calendar:
         }
     
     def get_rest_holiday(self):
+        """Get the rest holiday if it exists. Otherwise it returns None
+        
+        Returns:
+            list -- Returns a list contianing the holiday info. Returns None
+                    if there is no holiday
+        """
+
         if self.hebrew_month in self.rest_holidays:
             if self.hebrew_day in self.rest_holidays[self.hebrew_month]:
                 return self.rest_holidays[self.hebrew_month][self.hebrew_day]
         return None
     
     def get_work_holiday(self):
+        """Get the work holiday if it exists. Otherwise it returns None
+        
+        Returns:
+            list -- Returns a list contianing the holiday info. Returns None
+                    if there is no holiday
+        """
+
         if self.hebrew_month in self.work_holiday:
             if self.hebrew_day in self.work_holiday[self.hebrew_month]:
                 return self.work_holiday[self.hebrew_month][self.hebrew_day]
@@ -72,6 +86,18 @@ class Calendar:
     
     @classmethod
     def is_holiday(cls, info):
+        """Checks if there is a holiday
+        
+        If there is a rest or work holiday it will return True. Otherwise it 
+        will be false
+        
+        Arguments:
+            info {object} -- A hebcal.TimeInfo object
+        
+        Returns:
+            boolean -- True if its a holiday False if its not a holiday
+        """
+
         holidays = cls(info)
 
         if holidays.get_rest_holiday() is not None:
@@ -84,6 +110,19 @@ class Calendar:
     
     @classmethod
     def is_rest_holiday(cls, info):
+        """Returns True if its a rest holiday
+        
+        Checks if its a rest holiday. By default its calculated from sunset to
+        sunset. If you set TimeInfo.alternate_nighttime to a diffrent time, it
+        will calculate from sunset to TimeInfo.alternate_nighttime
+        
+        Arguments:
+            info {object} -- hebcal.TimeInfo object
+        
+        Returns:
+            bool -- True if its a rest holiday False if it's not.
+        """
+
         holiday = cls(info)
 
         if holiday.get_rest_holiday() is not None:
