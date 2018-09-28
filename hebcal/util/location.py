@@ -2,8 +2,6 @@ from tzwhere import tzwhere
 
 
 def get_timezone(latitude, longitude):
-    print(latitude)
-    print(longitude)
     """Get timezone from latitude/longitude
 
     
