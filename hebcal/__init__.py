@@ -316,7 +316,7 @@ class TimeInfo:
         """Get the dusk of the current day
         
         Note:
-            The entire dusk calculation is not acurate. It needs to be redone
+            The entire dusk calculation is not accurate. It needs to be redone
         
         Returns:
             object: datetime.datetime object of the time of dusk
