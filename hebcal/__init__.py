@@ -60,8 +60,6 @@ class TimeInfo:
         else:
             self.alternate_nighttime = self.today_sunset()
 
-        self.heb_date()
-
     def __repr__(self):
         return (f"hebcal.TimeInfo('{str(self.date_time)}', "
                 f"latitude={self.latitude}, longitude={self.longitude}, "
