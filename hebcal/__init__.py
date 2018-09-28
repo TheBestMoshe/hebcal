@@ -59,6 +59,11 @@ class TimeInfo:
 
         self.heb_date()
 
+    def __repr__(self):
+        return (f"hebcal.TimeInfo('{str(self.date_time)}', "
+                f"latitude={self.latitude}, longitude={self.longitude}, "
+                f"timezone={self.timezone})")
+
     @classmethod
     def now(cls, **kwargs):
         """Call class with current time and date
