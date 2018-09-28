@@ -8,3 +8,5 @@ hebcal/util/parse_datetime.py
 hebcal/util/sun.py
 hebcal/variable_name_tags/ashkinazik.py
 hebcal/variable_name_tags/numbers.py
+scratch.py
+hebcal/heb_date_old.py
