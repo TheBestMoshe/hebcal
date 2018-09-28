@@ -75,7 +75,14 @@ class TimeInfo:
         from datetime import datetime
         return cls(datetime.now(), **kwargs)
     
-    def heb_date(self):
+    @property
+    def hebrew_date(self):
+        """Return the Hebrew date as a tuple
+        
+        Returns:
+            tuple -- Hebrew date (year, month, day)
+        """
+
         if self.is_night():
             date_time = self.date_time + timedelta(days=1)
         else:
@@ -84,12 +91,37 @@ class TimeInfo:
         greg_month = int(date_time.strftime('%m'))
         greg_day = int(date_time.strftime('%d'))
 
-        self.hebrew_date = hebrew.from_gregorian(greg_year,
-                                                 greg_month,
-                                                 greg_day)
-        self.hebrew_year = self.hebrew_date[0]
-        self.hebrew_month = self.hebrew_date[1]
-        self.hebrew_day = self.hebrew_date[2]
+        return hebrew.from_gregorian(greg_year, greg_month, greg_day)
+
+    @property
+    def hebrew_year(self):
+        """Returns the Hebrew year
+
+        Returns:
+            int -- The Hebrew year
+        """
+
+        return self.hebrew_date[0]
+
+    @property
+    def hebrew_month(self):
+        """Returns the Hebrew month
+
+        Returns:
+            int -- The Hebrew month
+        """
+
+        return self.hebrew_date[1]
+
+    @property
+    def hebrew_day(self):
+        """Returns the Hebrew day
+
+        Returns:
+            int -- The Hebrew day
+        """
+
+        return self.heb_date[2]
 
     @property
     def alternate_hebrew_date(self):
