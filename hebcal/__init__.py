@@ -128,7 +128,6 @@ class TimeInfo:
         # If time is after sunset but before alternate_nighttime use this days
         #   hebrew date instead of changing to tomorow's
         if self.is_night():
-            # if self.date_time > self.today_sunset():
             if self.date_time < self.alternate_nighttime:
                 date_time = self.date_time
 
