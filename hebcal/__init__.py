@@ -41,6 +41,8 @@ class TimeInfo:
         if 'timezone' in kwargs:
             timezone = kwargs['timezone']
         else:
+            # using get_timezone() slows is slow. It's better to pass in a
+            # timzone argument when creating TimeInfo()
             timezone = get_timezone(self.latitude, self.longitude)
 
         self.timezone = timezone
@@ -50,7 +52,9 @@ class TimeInfo:
         self._sun_calculations()
 
         # This is used to check for halachic nightfall. The default is at
-        #   sunset. This can be changed, for example to 72 minutes after sunset
+        # sunset. This can be changed, for example to 72 minutes after sunset.
+        # The simplest way to do this is to create a hebcal.zmanim object and
+        # use one of the nighttimes (i.e. hebcal.zmanim.Zmanim().night_72)
         if 'alternate_nighttime' in kwargs:
             self.alternate_nighttime = kwargs['alternate_nighttime']
         else:
@@ -124,8 +128,15 @@ class TimeInfo:
 
     @property
     def alternate_hebrew_date(self):
-        # If time is after sunset but before alternate_nighttime use this days
-        #   hebrew date instead of changing to tomorow's
+        """Get the day's Hebrew date if it's before the alternate_nighttime
+        
+        The default TimeInfo.hebrew_date bases its date on sunset. Use this
+        attribute to base the Hebrew date on the alternate date
+        
+        Returns:
+            tuple -- hebrew date formated as (year, month, day)
+        """
+
         if self.is_night():
             if self.date_time < self.alternate_nighttime:
                 date_time = self.date_time
