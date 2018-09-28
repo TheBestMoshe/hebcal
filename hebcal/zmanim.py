@@ -3,10 +3,10 @@ from datetime import timedelta
 
 class Zmanim:
     def __init__(self, info):
-        self.sunrise = info.today_sunrise()
-        self.sunset = info.today_sunset()
-        self.alot_hashachar = info.today_dawn()
-        self.tzait_hakochavim = info.today_dusk()
+        self.sunrise = info.today_sunrise
+        self.sunset = info.today_sunset
+        self.alot_hashachar = info.today_dawn
+        self.tzait_hakochavim = info.today_dusk
         
         self.alot_72 = self.sunrise - timedelta(minutes=72)
         self.night_72 = self.sunset + timedelta(minutes=72)

@@ -58,7 +58,7 @@ class TimeInfo:
         if 'alternate_nighttime' in kwargs:
             self.alternate_nighttime = kwargs['alternate_nighttime']
         else:
-            self.alternate_nighttime = self.today_sunset()
+            self.alternate_nighttime = self.today_sunset
 
     def __repr__(self):
         return (f"hebcal.TimeInfo('{str(self.date_time)}', "
@@ -214,24 +214,28 @@ class TimeInfo:
         else:
             return True
 
+    @property
     def today_sunrise(self):
         if self.date_time.strftime('%d') == self.previous_sunrise.strftime('%d'):
             return self.previous_sunrise
         elif self.date_time.strftime('%d') == self.next_sunrise.strftime('%d'):
             return self.next_sunrise
 
+    @property
     def today_sunset(self):
         if self.date_time.strftime('%d') == self.previous_sunset.strftime('%d'):
             return self.previous_sunset
         elif self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
             return self.next_sunset
     
+    @property
     def today_dawn(self):
         if self.date_time.strftime('%d') == self.previous_dawn.strftime('%d'):
             return self.previous_dawn
         elif self.date_time.strftime('%d') == self.next_dawn.strftime('%d'):
             return self.next_dawn
 
+    @property
     def today_dusk(self):
         if self.date_time.strftime('%d') == self.previous_dusk.strftime('%d'):
             return self.previous_dusk
