@@ -1,4 +1,4 @@
-class Holidays:
+class Calendar:
     def __init__(self, info):
         self.hebrew_month = str(info.hebrew_month)
         self.hebrew_day = str(info.hebrew_day)
@@ -71,7 +71,7 @@ class Holidays:
         return None
     
     @classmethod
-    def is_today_holiday(cls, info):
+    def is_holiday(cls, info):
         holidays = cls(info)
 
         if holidays.get_rest_holiday() is not None:
