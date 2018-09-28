@@ -11,8 +11,10 @@ class Zmanim:
         self.alot_72 = self.sunrise - timedelta(minutes=72)
         self.night_72 = self.sunset + timedelta(minutes=72)
 
-        self.sun_hours = (self.sunset.timestamp() - self.sunrise.timestamp()) / 12
-        self.sun_hours_ma = (self.night_72.timestamp() - self.alot_72.timestamp()) / 12
+        self.sun_hours = (self.sunset.timestamp() -
+                          self.sunrise.timestamp()) / 12
+        self.sun_hours_ma = (self.night_72.timestamp() -
+                             self.alot_72.timestamp()) / 12
 
         self.last_shema_gra = self.sunrise + timedelta(seconds=(self.sun_hours * 3))
         self.last_shema_ma = self.alot_72 + timedelta(seconds=(self.sun_hours_ma * 3))
