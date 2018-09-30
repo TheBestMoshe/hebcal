@@ -94,7 +94,6 @@ class TimeInfo:
         from datetime import datetime
         return cls(datetime.now(), **kwargs)
     
-    @property
     def hebrew_date(self):
         """Return the Hebrew date as a tuple
         
@@ -112,7 +111,6 @@ class TimeInfo:
 
         return hebrew.from_gregorian(greg_year, greg_month, greg_day)
 
-    @property
     def hebrew_year(self):
         """Returns the Hebrew year
 
@@ -122,7 +120,6 @@ class TimeInfo:
 
         return self.hebrew_date[0]
 
-    @property
     def hebrew_month(self):
         """Returns the Hebrew month
 
@@ -132,7 +129,6 @@ class TimeInfo:
 
         return self.hebrew_date[1]
 
-    @property
     def hebrew_day(self):
         """Returns the Hebrew day
 
@@ -140,9 +136,8 @@ class TimeInfo:
             int -- The Hebrew day
         """
 
-        return self.hebrew_date[2]
+        return self.hebrew_date()[2]
 
-    @property
     def alternate_hebrew_date(self):
         """Get the day's Hebrew date if it's before the alternate_nighttime
         
@@ -270,7 +265,6 @@ class TimeInfo:
         else:
             return True
 
-    @property
     def today_sunrise(self):
         """Get the sunrise of the current day
         
@@ -283,7 +277,6 @@ class TimeInfo:
         elif self.date_time.strftime('%d') == self.next_sunrise.strftime('%d'):
             return self.next_sunrise
 
-    @property
     def today_sunset(self):
         """Get the sunset of the current day
         
@@ -296,7 +289,6 @@ class TimeInfo:
         elif self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
             return self.next_sunset
     
-    @property
     def today_dawn(self):
         """Get the dawn of the current day
         
@@ -311,7 +303,6 @@ class TimeInfo:
         elif self.date_time.strftime('%d') == self.next_dawn.strftime('%d'):
             return self.next_dawn
 
-    @property
     def today_dusk(self):
         """Get the dusk of the current day
         
