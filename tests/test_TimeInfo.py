@@ -21,16 +21,16 @@ def test_is_night():
 
 
 def test_hebrew_date():
-    assert str(ti.hebrew_date) == '(5779, 7, 11)'
+    assert str(ti.hebrew_date()) == '(5779, 7, 11)'
 
 
 def test_alternate_hebrew_date():
     from hebcal import zmanim
 
     zmanim = zmanim.Zmanim(ti)
-    ti.alternate_nighttime = zmanim.night_72
-    assert str(ti.alternate_hebrew_date) == '(5779, 7, 10)'
-    assert ti.hebrew_day == 11
+    ti.alternate_nighttime = zmanim.night_72()
+    assert str(ti.alternate_hebrew_date()) == '(5779, 7, 10)'
+    assert ti.hebrew_day() == 11
 
 
 def test_is_next_hebrew_day():
