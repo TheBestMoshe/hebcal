@@ -3,6 +3,7 @@ from datetime import timedelta
 
 class Zmanim:
     def __init__(self, info):
+        self.info = info
         self.sunrise = info.today_sunrise
         self.sunset = info.today_sunset
         self.alot_hashachar = info.today_dawn
@@ -29,6 +30,9 @@ class Zmanim:
         # Need to add Mincha Ketana
 
         self.plag_hamincha = self.sunrise + timedelta(seconds=(self.sun_hours * 10.75))
+    
+    def __repr__(self):
+        return f'hebcal.zmanim.Zmanim({self.info})'
     
     @classmethod
     def json(cls, info):
