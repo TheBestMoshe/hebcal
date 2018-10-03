@@ -8,7 +8,9 @@ The same goes for any Jewish holiday package. You first need to figure out what 
 
 I wanted something that I can just ask "is today a rest holiday?" and I should get a True or False.
 
-I wrote Hebcal to solve these problems. It takes in a latitude and longitude to calculate the location. Here's a quick example:
+I wrote Hebcal to solve these problems. It takes in a latitude and longitude to calculate the location.
+It can be installed through pip: `pip install hebcal`
+Here's a quick example:
 ```python
 import hebcal
 
@@ -39,7 +41,7 @@ print(time_info.is_yom())
 Note: Calculating the timezone from the lat/lon slows down the calculations. It is best to pass the timezone as an argument:</sub>
 
 ```python
-time_info = hebcal.TimeInfo.now(timezone= 'America/New_York', latitude=40.089909, longitude=-74.216270)
+time_info = hebcal.TimeInfo.now(timezone='America/New_York', latitude=40.089909, longitude=-74.216270)
 ```
 You can manualy get the timezone using Hebcal:
 ```python
