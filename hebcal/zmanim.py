@@ -4,10 +4,10 @@ from datetime import timedelta
 class Zmanim:
     def __init__(self, info):
         self.info = info
-        
+
     def __repr__(self):
         return f'hebcal.zmanim.Zmanim({self.info})'
-
+    
     def sunrise(self):
         """ Returns the time of sunrise """
         return self.info.today_sunrise()
@@ -69,27 +69,27 @@ class Zmanim:
     def last_shema_ma(self):
         """ Return the last Shema using Shaos Zmanios of the Magen Avrahom """
         return self.alot_72() + timedelta(seconds=(self.sun_hours_ma() * 3))
-
+    
     def last_tefila_gra(self):
         """ Return Sof Zman Tefila using Shaos Zmanios of the Gra """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 4))
-
+    
     def last_tefila_ma(self):
         """ Return Sof Zman Tefila using Shaos Zmanios of the Magen Avrahom """
         return self.alot_72() + timedelta(seconds=(self.sun_hours_ma() * 4))
-
+    
     def midday(self):
         """ Return the time for midday (chatzot) 
-
+        
         This is calculated using Shaos Zmanios according to the Gra
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 6.5))
-        
-        # Need to add Mincha Ketana
+    
+    # Need to add Mincha Ketana
 
     def plag_hamincha(self):
         """ Return the time for Plag Hamincha
-    
+
         This is calculated using Shaos Zmanios according to the Gra
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 10.75))
@@ -133,7 +133,7 @@ if __name__ == '__main__':
     #                   latitude=40.092383, longitude=-74.219996)
     ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
                   latitude=40.092383, longitude=-74.219996)
-    
+
     z = Zmanim.json(ti)
     # print(z.sun_hours)
     # print(z.last_shema_gra.strftime('%-I:%M:%S %p'))

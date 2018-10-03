@@ -118,7 +118,7 @@ class TimeInfo:
             int -- The Hebrew year
         """
 
-        return self.hebrew_date[0]
+        return self.hebrew_date()[0]
 
     def hebrew_month(self):
         """Returns the Hebrew month
@@ -127,7 +127,7 @@ class TimeInfo:
             int -- The Hebrew month
         """
 
-        return self.hebrew_date[1]
+        return self.hebrew_date()[1]
 
     def hebrew_day(self):
         """Returns the Hebrew day
@@ -149,7 +149,7 @@ class TimeInfo:
         """
 
         if self.is_night():
-            if self.date_time < self.alternate_nighttime:
+            if self.date_time < self.alternate_nighttime():
                 date_time = self.date_time
 
                 greg_year = int(date_time.strftime('%Y'))
@@ -160,9 +160,9 @@ class TimeInfo:
                                                               greg_month,
                                                               greg_day)
             else:
-                alternate_hebrew_date = self.hebrew_date
+                alternate_hebrew_date = self.hebrew_date()
         else:
-            alternate_hebrew_date = self.hebrew_date
+            alternate_hebrew_date = self.hebrew_date()
         
         return alternate_hebrew_date
 
