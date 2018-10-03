@@ -38,13 +38,13 @@ print(time_info.is_night())
 print(time_info.is_yom())
 ###False
 ```
+
 <sub>
 Note: Calculating the timezone from the lat/lon slows down the calculations. It is best to pass the timezone as an argument:</sub>
-
 ```python
 time_info = hebcal.TimeInfo.now(timezone='America/New_York', latitude=40.089909, longitude=-74.216270)
 ```
-You can manualy get the timezone using Hebcal:
+You can manually get the timezone using Hebcal:
 ```python
 from hebcal.util.location import get_location
 timezone = get_location(latitude==40.089909, longitude=-74.216270)
@@ -58,11 +58,10 @@ print(timezone)
 
 Here's an example of the hebcal.zmanim
 ```python
-import hebcal import zmanim
 time_info = hebcal.TimeInfo.now(latitude=40.089909, longitude=-74.216270)
 
 # pass a hbcal.TimeInfo object into Zmanim
-zmanim = zmanim.Zmanim(time_info)
+zmanim = hebcal.Zmanim(time_info)
 print(zmanim.last_shema_ma)
 ###2018-09-27 09:12:12.895624-04:00
 print(zmanim.last_shema_ma.strftime("%-I:%M:%S %p"))
@@ -72,7 +71,7 @@ Other than accessing individual zmanim, You can just print the Zmanim object, wh
 
 Another option is to get all the zmanim configures as json:
 ```python
-zmanim_json = zmanim.Zmanim.json(time_info)
+zmanim_json = hebcal.Zmanim.json(time_info)
 print(zmanim_json['earliest mincha'])
 ###2018-09-27 13:17:19.756457-04:00
 ```
