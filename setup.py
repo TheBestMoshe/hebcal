@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='hebcal',
-    version='0.0.2.a0.dev0',
+    version='0.0.1.a0.dev0',
     author='Moshe G',
     author_email='themygcompany@gmail.com',
     description='A Python package to manipulate location aware, Hebrew dates, times, and holidays.',
