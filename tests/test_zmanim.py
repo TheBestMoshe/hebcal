@@ -27,9 +27,6 @@ def test_night_72():
     assert str(zmanim.night_72()) == '2018-09-19 20:11:12.782791-04:00'
 
 
-def print_stuff():
-    print(zmanim.night_72)
-
 
 if __name__ == '__main__':
     pass
