@@ -41,6 +41,7 @@ print(time_info.is_yom())
 
 <sub>
 Note: Calculating the timezone from the lat/lon slows down the calculations. It is best to pass the timezone as an argument:</sub>
+
 ```python
 time_info = hebcal.TimeInfo.now(timezone='America/New_York', latitude=40.089909, longitude=-74.216270)
 ```
