@@ -9,7 +9,8 @@ The same goes for any Jewish holiday package. You first need to figure out what 
 I wanted something that I can just ask "is today a rest holiday?" and I should get a True or False.
 
 I wrote Hebcal to solve these problems. It takes in a latitude and longitude to calculate the location.
-It can be installed through pip: `pip install hebcal`
+It can be installed through pip: `pip install hebcal`.
+
 Here's a quick example:
 ```python
 import hebcal
