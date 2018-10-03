@@ -1,3 +1,6 @@
+__version__ = '0.0.1.a0.dev1'
+
+
 import setuptools
 
 with open('README.md', 'r') as fh:
