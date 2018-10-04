@@ -1,7 +1,7 @@
-from hebcal import TimeInfo
+import hebcal
 
-ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
-              latitude=40.092383, longitude=-74.219996)
+ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
+                     latitude=40.092383, longitude=-74.219996)
 
 
 def test_today_sunset():
@@ -25,9 +25,7 @@ def test_hebrew_date():
 
 
 def test_alternate_hebrew_date():
-    from hebcal import zmanim
-
-    zmanim = zmanim.Zmanim(ti)
+    zmanim = hebcal.Zmanim(ti)
     ti.alternate_nighttime = zmanim.night_72
     assert str(ti.alternate_hebrew_date()) == '(5779, 7, 10)'
     assert ti.hebrew_day() == 11

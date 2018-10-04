@@ -1,10 +1,10 @@
 import pytest
-from hebcal import TimeInfo, zmanim
+import hebcal
 
 
-ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
-              latitude=40.092383, longitude=-74.219996)
-zmanim = zmanim.Zmanim(ti)
+ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
+                     latitude=40.092383, longitude=-74.219996)
+zmanim = hebcal.Zmanim(ti)
 
 
 def test_alot_hashachar():
@@ -25,8 +25,3 @@ def test_plag_hamincha():
 
 def test_night_72():
     assert str(zmanim.night_72()) == '2018-09-19 20:11:12.782791-04:00'
-
-
-
-if __name__ == '__main__':
-    pass
