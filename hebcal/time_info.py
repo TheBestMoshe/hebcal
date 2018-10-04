@@ -81,14 +81,17 @@ class TimeInfo:
 
     @property
     def date_time(self):
+        """ Returns a date_time object """
         return self._date_time_object
 
     @date_time.setter
     def date_time(self, date_time):
+        """ Parse a datetime object or string """
         self._date_time_object = proccess_datetime(date_time,
                                                    timezone=self.timezone)
 
     def __repr__(self):
+        """ Returns the current a string of a fully reproducible class info """
         return (f"hebcal.TimeInfo('{str(self.date_time)}', "
                 f"latitude={self.latitude}, longitude={self.longitude}, "
                 f"timezone={self.timezone})")
