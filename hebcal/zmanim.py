@@ -85,6 +85,13 @@ class Zmanim:
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 6.5))
     
+    def mincha_gedola(self):
+        """ Return the time for Mincha Gedola
+
+        This is calculated using Shaos Zmanios according to the Gra
+        """
+        return self.sunrise() + timedelta(seconds=(self.sun_hours() * 9.5))
+    
     # Need to add Mincha Ketana
 
     def plag_hamincha(self):
@@ -119,7 +126,7 @@ class Zmanim:
                 f'Last Shachris MA: {self.last_tefila_ma().strftime("%-I:%M:%S %p")}\n'
                 f'Last Shachris Gra: {self.last_tefila_gra().strftime("%-I:%M:%S %p")}\n'
                 f'Midday: {self.midday().strftime("%-I:%M:%S %p")}\n'
-                f'Earliest Mincha: {self.big_mincha().strftime("%-I:%M:%S %p")}\n'
+                f'Earliest Mincha: {self.mincha_gedola().strftime("%-I:%M:%S %p")}\n'
                 f'Plag Hamincha: {self.plag_hamincha().strftime("%-I:%M:%S %p")}\n'
                 f'Sunset: {self.sunset().strftime("%-I:%M:%S %p")}\n'
                 f'72: {self.night_72().strftime("%-I:%M:%S %p")}\n'
