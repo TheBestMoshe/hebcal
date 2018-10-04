@@ -68,8 +68,6 @@ class TimeInfo:
         # self.date_time = proccess_datetime(date_time, timezone=self.timezone)
         self.date_time = date_time
 
-        self._sun_calculations()
-
         # This is used to check for halachic nightfall. The default is at
         # sunset. This can be changed, for example to 72 minutes after sunset.
         # The simplest way to do this is to create a hebcal.zmanim object and
@@ -153,10 +151,10 @@ class TimeInfo:
 
     def alternate_hebrew_date(self):
         """Get the day's Hebrew date if it's before the alternate_nighttime
-        
+
         The default TimeInfo.hebrew_date bases its date on sunset. Use this
         attribute to base the Hebrew date on the alternate date
-        
+
         Returns:
             tuple -- hebrew date formated as (year, month, day)
         """
@@ -176,70 +174,58 @@ class TimeInfo:
                 alternate_hebrew_date = self.hebrew_date()
         else:
             alternate_hebrew_date = self.hebrew_date()
-        
+
         return alternate_hebrew_date
 
-    def _sun_calculations(self):
-        """Calculate the sun times
-
-        Creates class attributes for based on the sun
-        
-        Attributes:
-            next_sunrise (:obj:): Datetime for  next sunrise
-            previous_sunrise (:obj:): Datetime for  previous sunset
-            next_sunset (:obj:): Datetime for  next sunset
-            previous_sunset (:obj:): Datetime for previous sunset
-            next_dawn (:obj:): Datetime for next dawn
-            previous_dawn (:obj:): Datetime for previous dawn
-            next_dusk (:obj:): Datetime for next dusk
-            previous_dusk (:obj:): Datetime for previous dusk
-        """
-
+    def _setup_sun(self):
         observer = ephem.Observer()
         observer.lat = str(self.latitude)
         observer.lon = str(self.longitude)
         observer.date = convert_datetime_to_utc(self.date_time)
-
         sun = ephem.Sun()
+
+        return observer, sun
     
-        observer.horizon = '0'
-        # Get times from ephem
+    @property
+    def next_sunrise(self):
+        observer, sun = self._setup_sun()
         next_sunrise = observer.next_rising(sun).datetime()
+        return convert_datetime_to_local(next_sunrise, timezone=self.timezone)
+    
+    @property
+    def previous_sunrise(self):
+        observer, sun = self._setup_sun()
         previous_sunrise = observer.previous_rising(sun).datetime()
-
+        return convert_datetime_to_local(previous_sunrise,
+                                         timezone=self.timezone)
+    
+    @property
+    def next_sunset(self):
+        observer, sun = self._setup_sun()
         next_sunset = observer.next_setting(sun).datetime()
+        return convert_datetime_to_local(next_sunset, timezone=self.timezone)
+    
+    @property
+    def previous_sunset(self):
+        observer, sun = self._setup_sun()
         previous_sunset = observer.previous_setting(sun).datetime()
-
+        return convert_datetime_to_local(previous_sunset,
+                                         timezone=self.timezone)
+    
+    @property
+    def next_dawn(self):
+        observer, sun = self._setup_sun()
         observer.horizon = '-16.1'
         next_dawn = observer.next_rising(sun, use_center=True).datetime()
+        return convert_datetime_to_local(next_dawn, timezone=self.timezone)
+    
+    @property
+    def previous_dawn(self):
+        observer, sun = self._setup_sun()
+        observer.horizon = '-16.1'
         previous_dawn = observer.previous_rising(sun,
-                                                      use_center=True).datetime()
-        
-        # NOTE: I don't think this is the proper dusk calculation
-        observer.horizon = '16.1'
-        next_dusk = observer.next_setting(sun, use_center=True).datetime()
-        previous_dusk = observer.previous_setting(sun,
-                                                       use_center=True).datetime()
-
-        # Since the ephem times are in UTC time, convert to local time
-        self.next_sunrise = convert_datetime_to_local(next_sunrise,
-                                                      timezone=self.timezone)
-        self.previous_sunrise = convert_datetime_to_local(previous_sunrise,
-                                                          timezone=self.timezone)
-        self.next_sunset = convert_datetime_to_local(next_sunset,
-                                                     timezone=self.timezone)
-        self.previous_sunset = convert_datetime_to_local(previous_sunset,
-                                                         timezone=self.timezone)
-
-        self.next_dawn = convert_datetime_to_local(next_dawn,
-                                                   timezone=self.timezone)
-        self.previous_dawn = convert_datetime_to_local(previous_dawn,
-                                                       timezone=self.timezone)
-
-        self.next_dusk = convert_datetime_to_local(next_dusk,
-                                                   timezone=self.timezone)
-        self.previous_dusk = convert_datetime_to_local(previous_dusk, 
-                                                       timezone=self.timezone)
+                                                 use_center=True).datetime()
+        return convert_datetime_to_local(previous_dawn, timezone=self.timezone)
 
     def is_day(self):
         """Check if its currently day
