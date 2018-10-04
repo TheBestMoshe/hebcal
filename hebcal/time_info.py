@@ -17,6 +17,7 @@ class TimeInfo:
             - latitude/longitude
             - timezone
             - sun times (sunrise, sunset, dawn, dusk)
+            - pronunciation (ashkinazik, hebrew, etc.)
         
     """
 
@@ -31,6 +32,8 @@ class TimeInfo:
                 longitude {int} -- in degrees
                 lat_lon {tuple} -- Latitude and longitude in degrees
                 timezone {str} -- A valid timezone
+                pronunciation {str} -- Pronunciation to use. Accepted values
+                    are: american_ashkinazik
         
         Attributes:
             latitude (float): The latitude
@@ -76,6 +79,17 @@ class TimeInfo:
             self.alternate_nighttime = kwargs['alternate_nighttime']
         else:
             self.alternate_nighttime = self.today_sunset
+
+        # Set the pronunciation that will be used.
+        # If no value is set, the default will be "american_ashkinazik"
+        if 'pronunciation' in kwargs:
+            valid_pronuncitation = ['american_ashkinazik']
+            if kwargs['pronunciation'] in valid_pronuncitation:
+                self.pronunciation = kwargs['pronuncitation']
+            else:
+                raise Exception('Invalid pronunciation')
+        else:
+            self.pronunciation = ['american_ashkinazik']
 
     @property
     def date_time(self):
