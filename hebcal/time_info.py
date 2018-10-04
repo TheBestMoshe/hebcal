@@ -65,7 +65,8 @@ class TimeInfo:
 
         self.timezone = timezone
 
-        self.date_time = proccess_datetime(date_time, timezone=self.timezone)
+        # self.date_time = proccess_datetime(date_time, timezone=self.timezone)
+        self.date_time = date_time
 
         self._sun_calculations()
 
@@ -77,6 +78,15 @@ class TimeInfo:
             self.alternate_nighttime = kwargs['alternate_nighttime']
         else:
             self.alternate_nighttime = self.today_sunset
+
+    @property
+    def date_time(self):
+        return self._date_time_object
+
+    @date_time.setter
+    def date_time(self, date_time):
+        self._date_time_object = proccess_datetime(date_time,
+                                                   timezone=self.timezone)
 
     def __repr__(self):
         return (f"hebcal.TimeInfo('{str(self.date_time)}', "
