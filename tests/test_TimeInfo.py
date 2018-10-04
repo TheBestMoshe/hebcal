@@ -38,8 +38,3 @@ def test_is_next_hebrew_day():
 def test_today_dawn():
     assert str(ti.today_dawn()) == '2018-09-19 05:20:28.556570-04:00'
 
-
-def test_today_dusk():
-    assert str(ti.today_dusk()) == '2018-09-19 17:30:13.696051-04:00'
-
-# print(ti.today_dawn())
