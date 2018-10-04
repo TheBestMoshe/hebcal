@@ -13,3 +13,4 @@ hebcal/heb_date_old.py
 dist/*
 build/*
 hebcal.egg-info/*
+.vscode/settings.json
