@@ -178,6 +178,14 @@ class TimeInfo:
         return alternate_hebrew_date
 
     def _setup_sun(self):
+        """Setup for sun calculations
+        
+        Builds PyEphem objects to calculate the sun times
+        
+        Returns:
+            Obj: Returns an ephem.Observer() object and a ephem.Sun() object
+        """
+
         observer = ephem.Observer()
         observer.lat = str(self.latitude)
         observer.lon = str(self.longitude)
@@ -188,12 +196,14 @@ class TimeInfo:
     
     @property
     def next_sunrise(self):
+        """ Return the time for the next sunrise """
         observer, sun = self._setup_sun()
         next_sunrise = observer.next_rising(sun).datetime()
         return convert_datetime_to_local(next_sunrise, timezone=self.timezone)
     
     @property
     def previous_sunrise(self):
+        """ Return the time for the previous sunrise """
         observer, sun = self._setup_sun()
         previous_sunrise = observer.previous_rising(sun).datetime()
         return convert_datetime_to_local(previous_sunrise,
@@ -201,12 +211,14 @@ class TimeInfo:
     
     @property
     def next_sunset(self):
+        """ Return the time for the next sunset """
         observer, sun = self._setup_sun()
         next_sunset = observer.next_setting(sun).datetime()
         return convert_datetime_to_local(next_sunset, timezone=self.timezone)
     
     @property
     def previous_sunset(self):
+        """ Return the time for the previous sunset """
         observer, sun = self._setup_sun()
         previous_sunset = observer.previous_setting(sun).datetime()
         return convert_datetime_to_local(previous_sunset,
@@ -214,6 +226,10 @@ class TimeInfo:
     
     @property
     def next_dawn(self):
+        """ Return the time for the next dawn 
+        
+        This dawn is calculated when the sun is 16.1° before sunrise (-16.1)
+        """
         observer, sun = self._setup_sun()
         observer.horizon = '-16.1'
         next_dawn = observer.next_rising(sun, use_center=True).datetime()
@@ -221,6 +237,10 @@ class TimeInfo:
     
     @property
     def previous_dawn(self):
+        """ Return the time for the previous dawn
+
+        This dawn is calculated when the sun is 16.1° before sunrise (-16.1)
+        """
         observer, sun = self._setup_sun()
         observer.horizon = '-16.1'
         previous_dawn = observer.previous_rising(sun,
