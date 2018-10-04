@@ -1,5 +1,4 @@
-from hebcal.calendar import Calendar
-from hebcal import TimeInfo
+import hebcal
 
 
 # This datetime that is used, is after sunset of Yom Kippur (sunset is 6:59 PM)
@@ -15,10 +14,10 @@ list_of_times = [{'datetime': '2018, 9, 19, 7:15 pm',
                   'is_shabbos': False},
                  ]
 
-ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
-              latitude=40.092383, longitude=-74.219996)
+ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
+                     latitude=40.092383, longitude=-74.219996)
 
-calendar = Calendar(ti)
+calendar = hebcal.Calendar(ti)
 
 
 # First we will run the tests using the default nighttime (sunset)
@@ -31,12 +30,12 @@ def test_get_work_holiday():
 
 
 def test_is_holiday():
-    assert Calendar.is_holiday(ti) is False
+    assert hebcal.Calendar.is_holiday(ti) is False
 
 
 def test_is_rest_holiday():
-    assert Calendar.is_rest_holiday(ti) is False
+    assert hebcal.Calendar.is_rest_holiday(ti) is False
 
 
 def test_is_shabbos():
-    assert Calendar.is_shabbos(ti) is False
+    assert hebcal.Calendar.is_shabbos(ti) is False
