@@ -22,8 +22,6 @@ setuptools.setup(
         'py-dateutil==2.2',
         'pyluach==0.3.0.dev1',
         'pytz==2018.5',
-        'Shapely==1.6.4.post2',
-        'six==1.11.0',
         'tzwhere==3.0.3',
     ],
     classifiers=[
