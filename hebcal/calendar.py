@@ -176,23 +176,3 @@ class Calendar:
             return True
 
         return False
-
-
-if __name__ == '__main__':
-    from __init__ import TimeInfo
-    from datetime import timedelta
-    from zmanim import Zmanim
-
-    ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
-                  latitude=40.092383, longitude=-74.219996)
-    # ti = TimeInfo.now(timezone='America/New_York',
-    #                   latitude=40.092383, longitude=-74.219996)
-    # print(Holidays.is_today_holiday(ti))
-    z = Zmanim(ti)
-    print(z)
-    ti.alternate_nighttime = z.night_72
-    # ti.heb_date()
-    # print(Holidays.is_shabbos(ti))
-    print(Holidays.is_rest_holiday(ti))
-    print(ti.hebrew_date, 'hebrew date')
-    print(ti.alternate_hebrew_date(), 'alternate')
