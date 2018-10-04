@@ -321,18 +321,3 @@ class TimeInfo:
             return self.previous_dawn
         elif self.date_time.strftime('%d') == self.next_dawn.strftime('%d'):
             return self.next_dawn
-
-    def today_dusk(self):
-        """Get the dusk of the current day
-        
-        Note:
-            The entire dusk calculation is not accurate. It needs to be redone
-        
-        Returns:
-            object: datetime.datetime object of the time of dusk
-        """
-
-        if self.date_time.strftime('%d') == self.previous_dusk.strftime('%d'):
-            return self.previous_dusk
-        else:
-            return self.next_dusk
