@@ -42,25 +42,3 @@ class Parshios:
 
     def parsha_string(self):
         return self._parsha_list()[self.parsha()]
-
-
-# class Parshios:
-#     def __init__(self, info):
-#         self.info = info
-
-#         # Set the pronunciation
-#         # If an invalid pronunciation is provided, default to
-#         # "american_ashkinzik".
-#         if self.info.pronunciation = 'american_ashkinazik':
-#             self.parsha_list = american_ashkinazik
-#         else:
-#             self.parsha_list = american_ashkinazik
-
-#     def parsha(self):
-#         pyluach_hebrew_date = pyluach.dates.HebrewDate(self.info.hebrew_year(),
-#                                                        self.info.hebrew_month(),
-#                                                        self.info.hebrew_day())
-#         return parshios.getparsha(pyluach_hebrew_date)
-
-#     def parsha_string(self):
-#         return parshios.PARSHIOS[self.parsha()[0]]
