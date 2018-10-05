@@ -79,7 +79,7 @@ class TimeInfo:
             self.alternate_nighttime = kwargs['alternate_nighttime']
         else:
             self.alternate_nighttime = self.today_sunset
-
+        
         # Set the pronunciation that will be used.
         # If no value is set, the default will be "american_ashkinazik"
         if 'pronunciation' in kwargs:
@@ -87,9 +87,10 @@ class TimeInfo:
             if kwargs['pronunciation'] in valid_pronuncitation:
                 self.pronunciation = kwargs['pronuncitation']
             else:
-                raise Exception('Invalid pronunciation')
+                raise Exception(f"pronunciation={kwargs['pronunciation']} is"
+                                " invalid")
         else:
-            self.pronunciation = ['american_ashkinazik']
+            self.pronunciation = 'american_ashkinazik'
 
     @property
     def date_time(self):
