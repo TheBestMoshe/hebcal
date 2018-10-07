@@ -101,20 +101,18 @@ class Zmanim:
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 10.75))
     
-    @classmethod
-    def json(cls, info):
-        z = Zmanim(info)
-        zmanim = {'alot': z.alot_hashachar(),
-                  'sunrise': z.sunrise(),
-                  'last shema ma': z.last_shema_ma(),
-                  'last shema gra': z.last_shema_gra(),
-                  'last shachris ma': z.last_tefila_ma(),
-                  'last shachris gra': z.last_shema_gra(),
-                  'midday': z.midday(),
-                  'earliest mincha': z.big_mincha(),
-                  'plag hamincha': z.plag_hamincha(),
-                  'sunset': z.sunset(),
-                  'nightfall 72': z.night_72(),
+    def json(self):
+        zmanim = {'alot': self.alot_hashachar(),
+                  'sunrise': self.sunrise(),
+                  'last shema ma': self.last_shema_ma(),
+                  'last shema gra': self.last_shema_gra(),
+                  'last shachris ma': self.last_tefila_ma(),
+                  'last shachris gra': self.last_shema_gra(),
+                  'midday': self.midday(),
+                  'earliest mincha': self.mincha_gedola(),
+                  'plag hamincha': self.plag_hamincha(),
+                  'sunset': self.sunset(),
+                  'nightfall 72': self.night_72(),
                   }
         return zmanim
 
