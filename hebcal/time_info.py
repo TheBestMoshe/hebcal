@@ -83,14 +83,21 @@ class TimeInfo:
         # Set the pronunciation that will be used.
         # If no value is set, the default will be "american_ashkinazik"
         if 'pronunciation' in kwargs:
-            valid_pronuncitation = ['american_ashkinazik']
-            if kwargs['pronunciation'] in valid_pronuncitation:
-                self.pronunciation = kwargs['pronuncitation']
+            self.pronunciation = kwargs['pronunciation']
             else:
-                raise Exception(f"pronunciation={kwargs['pronunciation']} is"
-                                " invalid")
-        else:
             self.pronunciation = 'american_ashkinazik'
+    
+    @property
+    def pronunciation(self):
+        return self._pronunciation_str
+    
+    @pronunciation.setter
+    def pronunciation(self, pronunciation):
+        if pronunciation in [
+                'american_ashkinazik', ]:
+            self._pronunciation_str = pronunciation
+        else:
+            raise Exception(f'"{pronunciation}" is not a valid pronunciation.')
 
     @property
     def date_time(self):
@@ -107,7 +114,7 @@ class TimeInfo:
         """ Returns the current a string of a fully reproducible class info """
         return (f"hebcal.TimeInfo('{str(self.date_time)}', "
                 f"latitude={self.latitude}, longitude={self.longitude}, "
-                f"timezone={self.timezone})")
+                f"timezone='{self.timezone}')")
 
     @classmethod
     def now(cls, **kwargs):
