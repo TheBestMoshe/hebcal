@@ -1,5 +1,7 @@
 from .zmanim import Zmanim
-from .calendar import Calendar
+# from .calendar import Holiday, is_shabbos
 from .time_info import TimeInfo
+from .parshios import Parshios
 
-__all__ = ['Zmanim', 'Calendar', 'TimeInfo']
+from . import calendar
+
