@@ -101,6 +101,36 @@ class Zmanim:
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 10.75))
     
+    def time_passed(self, item):
+        """Check if a specific zman has passed
+
+        Pass in a hebcal.Zmanim object to check if the time has allready passed
+
+        Args:
+            item (obj): datetime object. It should be a Zmanim object
+
+        Returns:
+            bool: True if zman has passed. Otherwise, False
+        """
+
+        if item.timestamp() < datetime.now().timestamp():
+            return True
+        else:
+            return False
+
+    def next_zman(self):
+        """ Returns the upcoming zman
+
+        Note: This method should only be used if TimeInfo is set to the current
+        time.
+        """
+        zmanim = self.json()
+        for zman in zmanim:
+            if not self.time_passed(zmanim[zman]):
+                return zman, zmanim[zman]
+
+        return 'alot', self.info.next_dawn
+
     def json(self):
         zmanim = {'alot': self.alot_hashachar(),
                   'sunrise': self.sunrise(),
