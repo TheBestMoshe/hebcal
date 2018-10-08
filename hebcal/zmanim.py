@@ -130,24 +130,3 @@ class Zmanim:
                 f'72: {self.night_72().strftime("%-I:%M:%S %p")}\n'
                 )
 
-
-if __name__ == '__main__':
-    from __init__ import TimeInfo
-
-    # ti = TimeInfo.now(timezone='America/New_York',
-    #                   latitude=40.092383, longitude=-74.219996)
-    ti = TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
-                  latitude=40.092383, longitude=-74.219996)
-
-    z = Zmanim.json(ti)
-    # print(z.sun_hours)
-    # print(z.last_shema_gra.strftime('%-I:%M:%S %p'))
-    # print(z.last_shema_ma.strftime('%-I:%M:%S %p'))
-    # print(z.alot_hashachar.strftime('%-I:%M:%S %p'))
-    # print(z.alot_72.strftime('%-I:%M:%S %p'))
-    # print(z.tzait_hakochavim.strftime('%-I:%M:%S %p'))
-    # print(f"Midday: {z.midday.strftime('%-I:%M:%S %p')}")
-    # print(f"Mincha Gedola: {z.big_mincha.strftime('%-I:%M:%S %p')}")
-    # print(f"Plag: {z.plag_hamincha.strftime('%-I:%M:%S %p')}")
-    for item in z:
-        print(item + ': ' + z[item].strftime("%-I:%M:%S %p"))
