@@ -17,25 +17,29 @@ list_of_times = [{'datetime': '2018, 9, 19, 7:15 pm',
 ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
                      latitude=40.092383, longitude=-74.219996)
 
-calendar = hebcal.Calendar(ti)
+holiday = hebcal.calendar.Holiday(ti)
 
 
 # First we will run the tests using the default nighttime (sunset)
 def test_get_rest_holiday():
-    assert calendar.get_rest_holiday() is None
+    assert holiday.get_rest_holiday() is None
 
 
 def test_get_work_holiday():
-    assert calendar.get_work_holiday() is None
+    assert holiday.get_work_holiday() is None
 
 
 def test_is_holiday():
-    assert hebcal.Calendar.is_holiday(ti) is False
+    assert hebcal.calendar.is_holiday(ti) is False
 
 
 def test_is_rest_holiday():
-    assert hebcal.Calendar.is_rest_holiday(ti) is False
+    assert hebcal.calendar.is_rest_holiday(ti) is False
 
 
 def test_is_shabbos():
-    assert hebcal.Calendar.is_shabbos(ti) is False
+    assert hebcal.calendar.is_shabbos(ti) is False
+
+
+def test_is_rest_day():
+    assert hebcal.calendar.is_rest_day(ti) is False
