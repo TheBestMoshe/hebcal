@@ -129,6 +129,8 @@ class Zmanim:
             if not self.time_passed(zmanim[zman]):
                 return zman, zmanim[zman]
 
+        # If all the zmanim of this day have passed, return Alot for the next
+        # day.
         return 'alot', self.info.next_dawn
 
     def json(self):
