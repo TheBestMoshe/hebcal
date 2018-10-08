@@ -83,7 +83,7 @@ class Zmanim:
         
         This is calculated using Shaos Zmanios according to the Gra
         """
-        return self.sunrise() + timedelta(seconds=(self.sun_hours() * 6.5))
+        return self.sunrise() + timedelta(seconds=(self.sun_hours() * 6))
     
     def mincha_gedola(self):
         """ Return the time for Mincha Gedola
