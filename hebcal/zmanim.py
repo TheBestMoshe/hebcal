@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 
 class Zmanim:
@@ -7,18 +7,18 @@ class Zmanim:
 
     def __repr__(self):
         return f'hebcal.zmanim.Zmanim({self.info})'
-    
+
     def sunrise(self):
         """ Returns the time of sunrise """
         return self.info.today_sunrise()
-    
+
     def sunset(self):
         """ Returns the time of sunset """
         return self.info.today_sunset()
-    
+
     def alot_hashachar(self):
         """Return the time for Alot Hashachar
-        
+
         Alot Hashachar is dawn. This is calculated when the sun is 16.1°
         below the eastern geometric horizon before sunrise (-16.1°).
         This calculation is based on the same calculation of 72 minutes but
@@ -39,11 +39,11 @@ class Zmanim:
         """
 
         return self.sunrise() - timedelta(minutes=72)
-    
+
     def night_72(self):
         """ Return thetime for nightfall, 72 minutes after sunset """
         return self.sunset() + timedelta(minutes=72)
-    
+
     def sun_hours(self):
         """ Return one Shah Zmanios in seconds
 
@@ -51,7 +51,7 @@ class Zmanim:
         12. This is the opinion of the Gra.
         """
         return (self.sunset().timestamp() - self.sunrise().timestamp()) / 12
-    
+
     def sun_hours_ma(self):
         """ Return on Shah Zmanios in seconds, according to the Magen Avrahom
 
@@ -61,37 +61,37 @@ class Zmanim:
 
         """
         return (self.night_72().timestamp() - self.alot_72().timestamp()) / 12
-    
+
     def last_shema_gra(self):
         """ Return the last Shema using Shaos Zmanios of the Gra """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 3))
-    
+
     def last_shema_ma(self):
         """ Return the last Shema using Shaos Zmanios of the Magen Avrahom """
         return self.alot_72() + timedelta(seconds=(self.sun_hours_ma() * 3))
-    
+
     def last_tefila_gra(self):
         """ Return Sof Zman Tefila using Shaos Zmanios of the Gra """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 4))
-    
+
     def last_tefila_ma(self):
         """ Return Sof Zman Tefila using Shaos Zmanios of the Magen Avrahom """
         return self.alot_72() + timedelta(seconds=(self.sun_hours_ma() * 4))
-    
+
     def midday(self):
         """ Return the time for midday (chatzot) 
-        
+
         This is calculated using Shaos Zmanios according to the Gra
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 6))
-    
+
     def mincha_gedola(self):
         """ Return the time for Mincha Gedola
 
         This is calculated using Shaos Zmanios according to the Gra
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 9.5))
-    
+
     # Need to add Mincha Ketana
 
     def plag_hamincha(self):
@@ -100,7 +100,7 @@ class Zmanim:
         This is calculated using Shaos Zmanios according to the Gra
         """
         return self.sunrise() + timedelta(seconds=(self.sun_hours() * 10.75))
-    
+
     def time_passed(self, item):
         """Check if a specific zman has passed
 
@@ -161,4 +161,3 @@ class Zmanim:
                 f'Sunset: {self.sunset().strftime("%-I:%M:%S %p")}\n'
                 f'72: {self.night_72().strftime("%-I:%M:%S %p")}\n'
                 )
-
