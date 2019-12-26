@@ -1,3 +1,4 @@
+import datetime
 import hebcal
 
 ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
@@ -38,3 +39,20 @@ def test_is_next_hebrew_day():
 def test_today_dawn():
     assert str(ti.today_dawn()) == '2018-09-19 05:20:28.556570-04:00'
 
+
+# Verify that the hebrew date does not increase at midnight.
+def test_midnight():
+    heb_dates = [ti.hebrew_date()]
+
+    # Get a week of times incrementing by an hour.
+    n_days = 7
+    hour_delta = 1
+
+    for i in range(n_days * 24 // hour_delta):
+        ti.date_time += datetime.timedelta(hours=hour_delta)
+        heb_dates.append(ti.hebrew_date())
+
+    # Monotonically increasing the gregorian date should mean that the
+    # hebrew dates list should be pre-sorted.
+    for hd, sd in zip(heb_dates, sorted(heb_dates)):
+        assert hd == sd
