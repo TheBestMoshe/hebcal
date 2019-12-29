@@ -47,20 +47,20 @@ class TimeInfo:
             Exception -- If no location info is given
         """
 
-        if 'latitude' in kwargs and 'longitude' in kwargs:
-            latitude = kwargs['latitude']
-            longitude = kwargs['longitude']
-        elif 'lat_lon' in kwargs:
-            latitude = kwargs['lat_lon'][0]
-            longitude = kwargs['lat_lon'][1]
+        if "latitude" in kwargs and "longitude" in kwargs:
+            latitude = kwargs["latitude"]
+            longitude = kwargs["longitude"]
+        elif "lat_lon" in kwargs:
+            latitude = kwargs["lat_lon"][0]
+            longitude = kwargs["lat_lon"][1]
         else:
-            raise Exception('A latitude and longitude is required.')
+            raise Exception("A latitude and longitude is required.")
 
         self.latitude = latitude
         self.longitude = longitude
 
-        if 'timezone' in kwargs:
-            timezone = kwargs['timezone']
+        if "timezone" in kwargs:
+            timezone = kwargs["timezone"]
         else:
             # using get_timezone() slows is slow. It's better to pass in a
             # timzone argument when creating TimeInfo()
@@ -75,26 +75,27 @@ class TimeInfo:
         # sunset. This can be changed, for example to 72 minutes after sunset.
         # The simplest way to do this is to create a hebcal.zmanim object and
         # use one of the nighttimes (i.e. hebcal.zmanim.Zmanim().night_72)
-        if 'alternate_nighttime' in kwargs:
-            self.alternate_nighttime = kwargs['alternate_nighttime']
+        if "alternate_nighttime" in kwargs:
+            self.alternate_nighttime = kwargs["alternate_nighttime"]
         else:
             self.alternate_nighttime = self.today_sunset
 
         # Set the pronunciation that will be used.
         # If no value is set, the default will be "american_ashkinazik"
-        if 'pronunciation' in kwargs:
-            self.pronunciation = kwargs['pronunciation']
-            else:
-            self.pronunciation = 'american_ashkinazik'
-    
+        if "pronunciation" in kwargs:
+            self.pronunciation = kwargs["pronunciation"]
+        else:
+            self.pronunciation = "american_ashkinazik"
+
     @property
     def pronunciation(self):
         return self._pronunciation_str
-    
+
     @pronunciation.setter
     def pronunciation(self, pronunciation):
         if pronunciation in [
-                'american_ashkinazik', ]:
+            "american_ashkinazik",
+        ]:
             self._pronunciation_str = pronunciation
         else:
             raise Exception(f'"{pronunciation}" is not a valid pronunciation.')
@@ -107,14 +108,15 @@ class TimeInfo:
     @date_time.setter
     def date_time(self, date_time):
         """ Parse a datetime object or string """
-        self._date_time_object = proccess_datetime(date_time,
-                                                   timezone=self.timezone)
+        self._date_time_object = proccess_datetime(date_time, timezone=self.timezone)
 
     def __repr__(self):
         """ Returns the current a string of a fully reproducible class info """
-        return (f"hebcal.TimeInfo('{str(self.date_time)}', "
-                f"latitude={self.latitude}, longitude={self.longitude}, "
-                f"timezone='{self.timezone}')")
+        return (
+            f"hebcal.TimeInfo('{str(self.date_time)}', "
+            f"latitude={self.latitude}, longitude={self.longitude}, "
+            f"timezone='{self.timezone}')"
+        )
 
     @classmethod
     def now(cls, **kwargs):
@@ -125,6 +127,7 @@ class TimeInfo:
         """
 
         from datetime import datetime
+
         return cls(datetime.now(), **kwargs)
 
     def hebrew_date(self):
@@ -137,9 +140,9 @@ class TimeInfo:
             date_time = self.date_time + timedelta(days=1)
         else:
             date_time = self.date_time
-        greg_year = int(date_time.strftime('%Y'))
-        greg_month = int(date_time.strftime('%m'))
-        greg_day = int(date_time.strftime('%d'))
+        greg_year = int(date_time.strftime("%Y"))
+        greg_month = int(date_time.strftime("%m"))
+        greg_day = int(date_time.strftime("%d"))
 
         return hebrew.from_gregorian(greg_year, greg_month, greg_day)
 
@@ -184,13 +187,13 @@ class TimeInfo:
             if self.date_time < self.alternate_nighttime():
                 date_time = self.date_time
 
-                greg_year = int(date_time.strftime('%Y'))
-                greg_month = int(date_time.strftime('%m'))
-                greg_day = int(date_time.strftime('%d'))
+                greg_year = int(date_time.strftime("%Y"))
+                greg_month = int(date_time.strftime("%m"))
+                greg_day = int(date_time.strftime("%d"))
 
-                alternate_hebrew_date = hebrew.from_gregorian(greg_year,
-                                                              greg_month,
-                                                              greg_day)
+                alternate_hebrew_date = hebrew.from_gregorian(
+                    greg_year, greg_month, greg_day
+                )
             else:
                 alternate_hebrew_date = self.hebrew_date()
         else:
@@ -227,8 +230,7 @@ class TimeInfo:
         """ Return the time for the previous sunrise """
         observer, sun = self._setup_sun()
         previous_sunrise = observer.previous_rising(sun).datetime()
-        return convert_datetime_to_local(previous_sunrise,
-                                         timezone=self.timezone)
+        return convert_datetime_to_local(previous_sunrise, timezone=self.timezone)
 
     @property
     def next_sunset(self):
@@ -242,8 +244,7 @@ class TimeInfo:
         """ Return the time for the previous sunset """
         observer, sun = self._setup_sun()
         previous_sunset = observer.previous_setting(sun).datetime()
-        return convert_datetime_to_local(previous_sunset,
-                                         timezone=self.timezone)
+        return convert_datetime_to_local(previous_sunset, timezone=self.timezone)
 
     @property
     def next_dawn(self):
@@ -252,7 +253,7 @@ class TimeInfo:
         This dawn is calculated when the sun is 16.1° before sunrise (-16.1)
         """
         observer, sun = self._setup_sun()
-        observer.horizon = '-16.1'
+        observer.horizon = "-16.1"
         next_dawn = observer.next_rising(sun, use_center=True).datetime()
         return convert_datetime_to_local(next_dawn, timezone=self.timezone)
 
@@ -263,9 +264,8 @@ class TimeInfo:
         This dawn is calculated when the sun is 16.1° before sunrise (-16.1)
         """
         observer, sun = self._setup_sun()
-        observer.horizon = '-16.1'
-        previous_dawn = observer.previous_rising(sun,
-                                                 use_center=True).datetime()
+        observer.horizon = "-16.1"
+        previous_dawn = observer.previous_rising(sun, use_center=True).datetime()
         return convert_datetime_to_local(previous_dawn, timezone=self.timezone)
 
     def is_am(self):
@@ -316,7 +316,7 @@ class TimeInfo:
             True if the next hebrew day has begun. False otherwise
         """
 
-        if self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
+        if self.date_time.strftime("%d") == self.next_sunset.strftime("%d"):
             return False
         else:
             return True
@@ -328,9 +328,9 @@ class TimeInfo:
             object: datetime.datetime object of the sunrise time
         """
 
-        if self.date_time.strftime('%d') == self.previous_sunrise.strftime('%d'):
+        if self.date_time.strftime("%d") == self.previous_sunrise.strftime("%d"):
             return self.previous_sunrise
-        elif self.date_time.strftime('%d') == self.next_sunrise.strftime('%d'):
+        elif self.date_time.strftime("%d") == self.next_sunrise.strftime("%d"):
             return self.next_sunrise
 
     def today_sunset(self):
@@ -340,9 +340,9 @@ class TimeInfo:
             object: datetime.datetime object of the sunset time
         """
 
-        if self.date_time.strftime('%d') == self.previous_sunset.strftime('%d'):
+        if self.date_time.strftime("%d") == self.previous_sunset.strftime("%d"):
             return self.previous_sunset
-        elif self.date_time.strftime('%d') == self.next_sunset.strftime('%d'):
+        elif self.date_time.strftime("%d") == self.next_sunset.strftime("%d"):
             return self.next_sunset
 
     def today_dawn(self):
@@ -354,7 +354,7 @@ class TimeInfo:
             object: datetime.datetime object of the time of dawn
         """
 
-        if self.date_time.strftime('%d') == self.previous_dawn.strftime('%d'):
+        if self.date_time.strftime("%d") == self.previous_dawn.strftime("%d"):
             return self.previous_dawn
-        elif self.date_time.strftime('%d') == self.next_dawn.strftime('%d'):
+        elif self.date_time.strftime("%d") == self.next_dawn.strftime("%d"):
             return self.next_dawn

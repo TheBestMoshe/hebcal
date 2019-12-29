@@ -1,18 +1,20 @@
-american_ashkinazik_holidays = {
-            'passover': 'Pesach',
-            'passover_chol_hamoed': 'Chol Hamoed Pesach',
-            'shavuot': 'Shavuos',
-            'rosh_hashana': 'Rosh Hashana',
-            'yom_kippur': 'Yom Kippur',
-            'sukkot': 'Sukkos',
-            'sukkot_chol_hamoed': 'Chol Hamoed Sukkos',
-            'hoshana_raba': 'Hoshana Raba',
-            'shemini_atzeret': 'Shmini Atzeres',
-            'simchat_torah': 'Simchas Torah',
-            'pesach_sheni': 'Pesach Sheini',
-            'lag_baomer': "Lag Ba'omer",
-            'hanukah': 'Chanuka'
-            }
+# american_ashkinazik_holidays = {
+#             'passover': 'Pesach',
+#             'passover_chol_hamoed': 'Chol Hamoed Pesach',
+#             'shavuot': 'Shavuos',
+#             'rosh_hashana': 'Rosh Hashana',
+#             'yom_kippur': 'Yom Kippur',
+#             'sukkot': 'Sukkos',
+#             'sukkot_chol_hamoed': 'Chol Hamoed Sukkos',
+#             'hoshana_raba': 'Hoshana Raba',
+#             'shemini_atzeret': 'Shmini Atzeres',
+#             'simchat_torah': 'Simchas Torah',
+#             'pesach_sheni': 'Pesach Sheini',
+#             'lag_baomer': "Lag Ba'omer",
+#             'hanukah': 'Chanuka'
+#             }
+
+import importlib
 
 
 class Holiday:
@@ -20,10 +22,10 @@ class Holiday:
         self.info = info
         self.hebrew_month = str(self.info.hebrew_month())
         self.hebrew_day = str(self.info.hebrew_day())
-    
+
     @property
     def rest_holidays(self):
-        holiday_name = self.holiday_pronunciation_dict()
+        holiday_name = self.pronunciations(category='holiday')
 
         rest_holidays = {
             '1': {
@@ -48,10 +50,10 @@ class Holiday:
             }
         }
         return rest_holidays
-    
+
     @property
     def work_holiday(self):
-        holiday_name = self.holiday_pronunciation_dict()
+        holiday_name = self.pronunciations(category='holiday')
 
         work_holiday = {
             '1': {
@@ -84,19 +86,43 @@ class Holiday:
             },
         }
         return work_holiday
+    
+    def special_days(self):
+        """ TODO """
+        pass
+    
+    def fast_days(self):
+        """ TODO """
+        pass
 
-    def holiday_pronunciation_dict(self):
-        if self.info.pronunciation == 'american_ashkinazik':
-            return american_ashkinazik_holidays
+    def pronunciations(self, category):
+        """Returns a dictionary or list of all the pronunciations
+        
+        Returns the pronuncations for the selected category. E.G. 'holiday'
+        
+        Args:
+            category (string): Pronunciation category, E.G. 'holiday', 'parsha'
+        
+        Raises:
+            Exception: If no valid category is passed
+        
+        Returns:
+            string: Dictionary or list of pronunciation in selected category.
+        """
 
-        # TODO: add other pronunciation options
-
+        pronunciation = importlib.import_module('.pronunciation_tags.'
+                                                f'{self.info.pronunciation}',
+                                                package='hebcal')
+        if category == 'holiday':
+            return pronunciation.holidays
+        elif category == 'parsha':
+            return pronunciation.parshios
         else:
-            return american_ashkinazik_holidays
+            raise Exception('Invalid category selected')
 
     def get_rest_holiday(self):
         """Get the rest holiday if it exists. Otherwise it returns None
-        
+
         Returns:
             list -- Returns a list contianing the holiday info. Returns None
                     if there is no holiday
@@ -106,10 +132,10 @@ class Holiday:
             if self.hebrew_day in self.rest_holidays[self.hebrew_month]:
                 return self.rest_holidays[self.hebrew_month][self.hebrew_day]
         return None
-    
+
     def get_work_holiday(self):
         """Get the work holiday if it exists. Otherwise it returns None
-        
+
         Returns:
             list -- Returns a list contianing the holiday info. Returns None
                     if there is no holiday
@@ -119,17 +145,17 @@ class Holiday:
             if self.hebrew_day in self.work_holiday[self.hebrew_month]:
                 return self.work_holiday[self.hebrew_month][self.hebrew_day]
         return None
-    
+
 
 def is_holiday(info):
     """Checks if there is a holiday
-    
+
     If there is a rest or work holiday it will return True. Otherwise it 
     will be false
-    
+
     Arguments:
         info {object} -- A hebcal.TimeInfo object
-    
+
     Returns:
         boolean -- True if its a holiday False if its not a holiday
     """
@@ -205,7 +231,7 @@ def is_shabbos(info):
     if info.date_time.weekday() == 5:
 
         # Use the alternate nighttime to allow for adjustments for halachic
-        #   nighttime (e.g. Use Rabinu Tam zman, whcich is 72 minutes after
+        #   nighttime (e.g. Use Rabinu Tam zman, which is 72 minutes after
         #   sunset)
         night = info.alternate_nighttime
         if info.date_time < night:

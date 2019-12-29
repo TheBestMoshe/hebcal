@@ -1,7 +1,8 @@
 import pyluach
 from pyluach import parshios
 
-american_ashkinazik = [
+
+american_ashkinazik_parshios = [
             'Beraishis', 'Noach', "Lech L'cha", 'Vayera', 'Chayei Sarah',
             'Toldos', 'Vayetzei', 'Vayishlach', 'Vayeshev', 'Miketz',
             'Vayigash', 'Vayechi', 'Shemos',  "Va'era", 'Bo', 'Beshalach',
@@ -29,9 +30,9 @@ class Parshios:
         # If an invalid pronunciation is provided, default to
         # "american_ashkinzik".
         if self.info.pronunciation == 'american_ashkinazik':
-            return american_ashkinazik
+            return american_ashkinazik_parshios
         else:
-            return american_ashkinazik
+            return american_ashkinazik_parshios
 
     def parsha(self):
         parsha_number = parshios.getparsha(self._pyluach_hebrew_date())

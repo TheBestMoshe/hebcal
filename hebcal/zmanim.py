@@ -141,7 +141,7 @@ class Zmanim:
                   'last shachris ma': self.last_tefila_ma(),
                   'last shachris gra': self.last_shema_gra(),
                   'midday': self.midday(),
-                  'earliest mincha': self.mincha_gedola(),
+                  'mincha gedola': self.mincha_gedola(),
                   'plag hamincha': self.plag_hamincha(),
                   'sunset': self.sunset(),
                   'nightfall 72': self.night_72(),
@@ -156,7 +156,7 @@ class Zmanim:
                 f'Last Shachris MA: {self.last_tefila_ma().strftime("%-I:%M:%S %p")}\n'
                 f'Last Shachris Gra: {self.last_tefila_gra().strftime("%-I:%M:%S %p")}\n'
                 f'Midday: {self.midday().strftime("%-I:%M:%S %p")}\n'
-                f'Earliest Mincha: {self.mincha_gedola().strftime("%-I:%M:%S %p")}\n'
+                f'Mincha Gedola: {self.mincha_gedola().strftime("%-I:%M:%S %p")}\n'
                 f'Plag Hamincha: {self.plag_hamincha().strftime("%-I:%M:%S %p")}\n'
                 f'Sunset: {self.sunset().strftime("%-I:%M:%S %p")}\n'
                 f'72: {self.night_72().strftime("%-I:%M:%S %p")}\n'
