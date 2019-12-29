@@ -1,10 +1,11 @@
 import hebcal
+from hebcal import parshios
 
 
 ti = hebcal.TimeInfo('2018, 9, 19, 7:15 pm', timezone='America/New_York',
                      latitude=40.092383, longitude=-74.219996)
 
-parshios = hebcal.Parshios(ti)
+parshios = parshios.Parshios(ti)
 
 
 def test_parsha_string():

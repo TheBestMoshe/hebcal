@@ -5,17 +5,17 @@ import datetime
 
 def proccess_datetime(raw_datetime, **kwargs):
     """Proccess a datetime string or object
-    
+
     Convert a datetime string into a datetime object and adds UTC timzone
     offset to the datetime
-    
+
     Arguments:
-        raw_datetime {str/datetime.datetime} -- datetime string in 
+        raw_datetime {str/datetime.datetime} -- datetime string in
         {YYYY-MM-DD HH-MM-SS} format.
-        
+
         **kwargs {key word arguments} -- Valid keyword arguments are:
               timezone {str} -- valid pytz timezone (i.e. America/New_York)
-    
+
     Returns:
         datetime.datetime object -- datetime object including localization info
     """
@@ -24,7 +24,7 @@ def proccess_datetime(raw_datetime, **kwargs):
         proccessed_datetime = raw_datetime
     else:
         proccessed_datetime = parse_datetime_str(raw_datetime)
-    
+
     if 'timezone' in kwargs:
         proccessed_datetime = add_timezone_to_datetime(proccessed_datetime,
                                                        kwargs['timezone'])
@@ -33,13 +33,13 @@ def proccess_datetime(raw_datetime, **kwargs):
 
 def parse_datetime_str(raw_datetime):
     """Parse a datetime string
-    
+
     use dateutil.parser.parse to parse a datetime string
-    
+
     Arguments:
         raw_datetime {str} -- datetime string in {YYYY-MM-DD HH-MM-SS} format.
                               other formats may also work.
-    
+
     Returns:
         object -- datetime.datetime object
     """
@@ -47,7 +47,13 @@ def parse_datetime_str(raw_datetime):
 
 
 def add_timezone_to_datetime(datetime, timezone):
-    return datetime.astimezone(pytz.timezone(timezone))
+    # If there is no tzinfo set, datetime assumes machine localtime.
+    # pytz localize fixes this when timezone differs from localtime.
+    if datetime.tzinfo is None:
+        tz = pytz.timezone(timezone)
+        return tz.localize(datetime, is_dst=None)
+    else:
+        return datetime.astimezone(pytz.timezone(timezone))
 
 
 def convert_datetime_to_utc(datetime):
